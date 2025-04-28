@@ -17,8 +17,8 @@ samples, guidance on mobile development, and a full API reference.
 # flutter_yahoo_image_search
 
 <div>
-  <img src="https://github.com/user-attachments/assets/22b63293-675b-42c4-8da6-5a877a0170e8" width="300">
-  <img src="https://github.com/user-attachments/assets/50d75dc4-06c5-46f8-9a7c-2509c9ab5f7c" width="300">
-  <img src="https://github.com/user-attachments/assets/ee286978-eda1-4cd4-8621-0d5cafe61253" width="300">
-  <img src="https://github.com/user-attachments/assets/95390552-5227-4717-81fe-a135a3331423" width="300">
+  <img src="https://github.com/user-attachments/assets/22b63293-675b-42c4-8da6-5a877a0170e8" width="240">
+  <img src="https://github.com/user-attachments/assets/50d75dc4-06c5-46f8-9a7c-2509c9ab5f7c" width="240">
+  <img src="https://github.com/user-attachments/assets/ee286978-eda1-4cd4-8621-0d5cafe61253" width="240">
+  <img src="https://github.com/user-attachments/assets/95390552-5227-4717-81fe-a135a3331423" width="240">
 </div>
