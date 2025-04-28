@@ -22,3 +22,8 @@ samples, guidance on mobile development, and a full API reference.
   <img src="https://github.com/user-attachments/assets/ee286978-eda1-4cd4-8621-0d5cafe61253" width="240">
   <img src="https://github.com/user-attachments/assets/95390552-5227-4717-81fe-a135a3331423" width="240">
 </div>
+
+```
+$ flutter pub get
+$ dart run build_runner build
+```
