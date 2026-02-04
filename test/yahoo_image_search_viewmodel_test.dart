@@ -2,6 +2,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:dio/dio.dart';
 import 'package:http_mock_adapter/http_mock_adapter.dart'; // おすすめ
 import '../lib/ui/yahoo_image_search_viewmodel.dart';
+import '../lib/repository/image_repository_impl.dart';
 
 void main() {
   late YahooImageSearchViewmodel viewModel;
@@ -11,7 +12,7 @@ void main() {
   setUp(() {
     dio = Dio();
     dioAdapter = DioAdapter(dio: dio);
-    viewModel = YahooImageSearchViewmodel(dio: dio);
+    viewModel = YahooImageSearchViewmodel(ImageRepositoryImpl(dio));
   });
 
   test('検索ワードが3文字未満の時は検索を実行しない', () async {
@@ -44,7 +45,7 @@ void main() {
     // 完了後の状態を確認
     expect(viewModel.isLoading, false);
     expect(viewModel.results.length, 1);
-    expect(viewModel.results.first, 'https://msp.c.yimg.jp/sample.jpg');
+    expect(viewModel.results.first.url, 'https://msp.c.yimg.jp/sample.jpg');
     expect(viewModel.error, isNull);
   });
 }

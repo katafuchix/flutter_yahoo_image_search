@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
+import '../core/app_config.dart';
 import '../model/image_result.dart';
 import '../repository/image_repository.dart';
 
@@ -25,7 +26,7 @@ class YahooImageSearchViewmodel extends ChangeNotifier {
 
   String? get error => _error;
 
-  bool get isSearchButtonEnabled => _searchWord.length >= 3;
+  bool get isSearchButtonEnabled => _searchWord.length >= AppConfig.minSearchWordLength;
 
   // Setter
   void setSearchWord(String word) {

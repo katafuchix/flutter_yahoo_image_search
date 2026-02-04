@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
+import 'package:flutter_yahoo_image_search/repository/image_repository_impl.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:photo_view/photo_view_gallery.dart';
 import 'package:provider/provider.dart';
@@ -13,7 +14,7 @@ class YahooImageSearchScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (_) => YahooImageSearchViewmodel(ImageRepository(Dio())),
+      create: (_) => YahooImageSearchViewmodel(ImageRepositoryImpl(Dio())),
       child: const _YahooImageSearchScreen(),
     );
   }
@@ -161,47 +162,6 @@ class _YahooImageSearchScreen extends StatelessWidget {
           ),
         );
       },
-    );
-  }
-
-  void __showPhotoBrowser(
-    BuildContext context,
-    List<String> photos,
-    int initialIndex,
-  ) {
-    Navigator.of(context).push(
-      PageRouteBuilder(
-        opaque: false,
-        pageBuilder: (_, __, ___) => Scaffold(
-          backgroundColor: Colors.black,
-          body: Stack(
-            children: [
-              PhotoViewGallery.builder(
-                itemCount: photos.length,
-                pageController: PageController(initialPage: initialIndex),
-                builder: (context, index) {
-                  return PhotoViewGalleryPageOptions(
-                    imageProvider: NetworkImage(photos[index]),
-                    heroAttributes: PhotoViewHeroAttributes(tag: photos[index]),
-                  );
-                },
-                scrollPhysics: const BouncingScrollPhysics(),
-                backgroundDecoration: const BoxDecoration(color: Colors.black),
-              ),
-              Positioned(
-                top: 40,
-                right: 20,
-                child: IconButton(
-                  icon: const Icon(Icons.close, color: Colors.white, size: 30),
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
     );
   }
 }
