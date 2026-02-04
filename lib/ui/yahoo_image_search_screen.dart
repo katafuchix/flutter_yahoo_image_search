@@ -58,7 +58,12 @@ class _YahooImageSearchScreen extends StatelessWidget {
                 ElevatedButton(
                   onPressed:
                       viewModel.isSearchButtonEnabled && !viewModel.isLoading
-                          ? viewModel.search
+                          ? () {
+                              // キーボードを閉じる
+                              FocusScope.of(context).unfocus();
+                              // 検索を実行
+                              viewModel.search();
+                            }
                           : null,
                   child: viewModel.isLoading
                       ? const SizedBox(
@@ -81,6 +86,8 @@ class _YahooImageSearchScreen extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 4.0), // 左右に16px余白
               child: GridView.builder(
+                keyboardDismissBehavior:
+                    ScrollViewKeyboardDismissBehavior.onDrag, // スクロール開始で閉じる
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 3, // 3列
                   crossAxisSpacing: 8.0,

@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
 
 class YahooImageSearchViewmodel extends ChangeNotifier {
-  final Dio _dio = Dio();
+// 通信インスタンスを外から受け取れるように変更
+  final Dio _dio;
+
+  YahooImageSearchViewmodel({Dio? dio}) : _dio = dio ?? Dio();
 
   String _searchWord = '';
   List<String> _results = [];
@@ -11,8 +14,11 @@ class YahooImageSearchViewmodel extends ChangeNotifier {
 
   // Getter
   String get searchWord => _searchWord;
+
   List<String> get results => _results;
+
   bool get isLoading => _isLoading;
+
   String? get error => _error;
 
   bool get isSearchButtonEnabled => _searchWord.length >= 3;
@@ -34,13 +40,15 @@ class YahooImageSearchViewmodel extends ChangeNotifier {
       final keyword = Uri.encodeComponent(_searchWord);
       final url = "https://search.yahoo.co.jp/image/search?ei=UTF-8&p=$keyword";
 
-      final response = await _dio.get(url, options: Options(headers: {
-        'User-Agent': 'your_email@example.com', // ← Constants.mail 相当
-      }));
+      final response = await _dio.get(url,
+          options: Options(headers: {
+            'User-Agent': 'your_email@example.com', // ← Constants.mail 相当
+          }));
 
       if (response.statusCode == 200) {
         final body = response.data.toString();
-        final regex = RegExp(r'(https?)://msp.c.yimg.jp/([A-Z0-9a-z._%+-/]{2,1024}).jpg');
+        final regex =
+            RegExp(r'(https?)://msp.c.yimg.jp/([A-Z0-9a-z._%+-/]{2,1024}).jpg');
         final matches = regex.allMatches(body);
 
         final urls = <String>{};

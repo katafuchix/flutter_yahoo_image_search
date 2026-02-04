@@ -55,7 +55,9 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   intl: ^0.19.0
-
+  # 通信をモックするためのライブラリ
+  http_mock_adapter: ^0.6.1
+  
 dev_dependencies:
   flutter_test:
     sdk: flutter
