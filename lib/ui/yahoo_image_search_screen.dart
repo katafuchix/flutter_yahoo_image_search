@@ -1,9 +1,11 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:photo_view/photo_view_gallery.dart';
 import 'package:provider/provider.dart';
 import 'yahoo_image_search_viewmodel.dart';
+import '../repository/image_repository.dart';
 
 class YahooImageSearchScreen extends StatelessWidget {
   const YahooImageSearchScreen({super.key});
@@ -11,7 +13,7 @@ class YahooImageSearchScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (_) => YahooImageSearchViewmodel(),
+      create: (_) => YahooImageSearchViewmodel(ImageRepository(Dio())),
       child: const _YahooImageSearchScreen(),
     );
   }
@@ -96,10 +98,11 @@ class _YahooImageSearchScreen extends StatelessWidget {
                 ),
                 itemCount: viewModel.results.length,
                 itemBuilder: (context, index) {
-                  final imageUrl = viewModel.results[index];
+                  final imageUrl = viewModel.results[index].url;
                   return GestureDetector(
                     onTap: () {
-                      _showPhotoBrowser(context, viewModel.results, index);
+                      _showPhotoBrowser(context,
+                          viewModel.results.map((e) => e.url).toList(), index);
                     },
                     child: Image.network(
                       imageUrl,

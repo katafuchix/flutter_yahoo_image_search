@@ -1,6 +1,58 @@
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
+import '../model/image_result.dart';
+import '../repository/image_repository.dart';
 
+class YahooImageSearchViewmodel extends ChangeNotifier {
+  final ImageRepository _repository;
+
+  // DioではなくRepositoryを受け取るようにする
+  YahooImageSearchViewmodel(this._repository);
+
+  List<ImageResult> _results = [];
+
+  List<ImageResult> get results => _results;
+
+  bool _isLoading = false;
+
+  bool get isLoading => _isLoading;
+
+  String _searchWord = '';
+  String? _error;
+
+  // Getter
+  String get searchWord => _searchWord;
+
+  String? get error => _error;
+
+  bool get isSearchButtonEnabled => _searchWord.length >= 3;
+
+  // Setter
+  void setSearchWord(String word) {
+    _searchWord = word;
+    notifyListeners();
+  }
+  
+  Future<void> search() async {
+    if (!isSearchButtonEnabled) return;
+
+    _isLoading = true;
+    _error = null;
+    notifyListeners();
+
+    try {
+      // 通信の詳細はリポジトリに任せる
+      _results = await _repository.fetchImages(_searchWord);
+    } catch (e) {
+      _error = e.toString();
+    } finally {
+      _isLoading = false;
+      notifyListeners();
+    }
+  }
+}
+
+/*
 class YahooImageSearchViewmodel extends ChangeNotifier {
 // 通信インスタンスを外から受け取れるように変更
   final Dio _dio;
@@ -68,3 +120,4 @@ class YahooImageSearchViewmodel extends ChangeNotifier {
     }
   }
 }
+*/
